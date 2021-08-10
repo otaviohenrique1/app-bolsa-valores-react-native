@@ -11,6 +11,14 @@ import { Login } from './Login';
 import { Cadastro } from './Cadastro';
 import { Dashboard } from './Dashboard';
 
+/*
+export type RootStackParamList = { 
+  Login: undefined;
+  Cadastro: undefined;
+  Dashboard: undefined;
+}
+*/
+
 export type RootStackParamList = { 
   Login: undefined;
   Cadastro: undefined;
