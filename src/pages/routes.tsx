@@ -33,6 +33,7 @@ export function RoutesStack() {
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName={"Dashboard"}
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Cadastro" component={Cadastro} />
