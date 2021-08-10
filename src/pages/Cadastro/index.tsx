@@ -1,8 +1,28 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View, Button, StyleSheet } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../routes';
 
-export function Cadastro() {
+type NavigationProps = { 
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+export function Cadastro({navigation}: NavigationProps) {
   return (
-    <View></View>
+    <View style={styles.container}>
+      <Text>Cadastro</Text>
+      <Button
+        title='Login'
+        onPress={() => navigation.navigate('Login')}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});

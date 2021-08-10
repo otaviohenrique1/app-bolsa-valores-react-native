@@ -18,12 +18,20 @@ export function AreaDadosEmpresa(props: AreaDadosEmpresaProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>{(props.data.favorito) ? 'true' : 'false'}</Text>
-      <Text style={styles.texto}>{props.data.nome_empresa}</Text>
-      <Text style={styles.texto}>{props.data.codigo_empresa}</Text>
-      <Text style={styles.texto}>{props.data.porcentagem}</Text>
-      <Text style={styles.texto}>{props.data.valor_acao}</Text>
-      <Text style={styles.texto}>{props.data.valor_variacao_dinheiro}</Text>
+      <View style={{
+        flexDirection: 'row'
+      }}>
+        <Text style={styles.texto}>{(props.data.favorito) ? 'true' : 'false'}</Text>
+        <Text style={styles.texto}>{props.data.nome_empresa}</Text>
+        <Text style={styles.texto}>{props.data.codigo_empresa}</Text>
+      </View>
+      <View style={{
+        flexDirection: 'row'
+      }}>
+        <Text style={styles.texto}>{props.data.porcentagem}</Text>
+        <Text style={styles.texto}>{props.data.valor_acao}</Text>
+        <Text style={styles.texto}>{props.data.valor_variacao_dinheiro}</Text>
+      </View>
     </View>
   );
 }
@@ -34,6 +42,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   texto: {
-    fontSize: 20
+    fontSize: 20,
+    margin: 10
   }
 });
