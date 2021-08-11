@@ -25,9 +25,11 @@ export function AreaDados() {
 
   return (
     <View style={styles.container}>
-      <CampoBusca
-        placeholder='Codigo da empresa'
-      />
+      <View style={styles.campoBuscaBox}>
+        <CampoBusca
+          placeholder='Codigo da empresa'
+        />
+      </View>
       <AreaDadosEmpresa
         data={dataEmpresa}
       />
@@ -43,4 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#dddddd',
   },
+  campoBuscaBox: {
+    marginVertical: 10,
+  }
 });
