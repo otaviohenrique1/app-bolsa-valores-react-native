@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, GestureResponderEvent } from 'react-native';
 import { BotaoFavorito, BotaoRemover } from '../Botao';
 
 interface ItemProps {
@@ -9,6 +9,8 @@ interface ItemProps {
   favoritado?: boolean;
   exibeBotaoFavorito?: boolean;
   exibeBotaoRemover?: boolean;
+  onPressBotaoFavorito?: ((event: GestureResponderEvent) => void) ;
+  onPressBotaoRemover?: ((event: GestureResponderEvent) => void) ;
 }
 
 export function Item(props: ItemProps) {
@@ -25,17 +27,18 @@ export function Item(props: ItemProps) {
 
   return (
     <View style={styles.itemContainer}>
-      {(props.exibeBotaoFavorito) && (
-        <View>
-          <BotaoFavorito
-            onPress={() => {}}
-          />
-        </View>
-      )}
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',
       }}>
+        {(props.exibeBotaoFavorito) && (
+          <View style={{ marginRight: 10 }}>
+            <BotaoFavorito
+              onPress={props.onPressBotaoFavorito}
+              favoritado={props.favoritado}
+            />
+          </View>
+        )}
         <Image
           source={require('../../assets/images/icone_empresa.png')}
           style={{ width: 36, height: 36, marginRight: 10 }}
@@ -59,18 +62,19 @@ export function Item(props: ItemProps) {
           {((verificaSeValorForPositivo) && '+')}
           {(props.porcentagem).toFixed(2)}%
         </Text>
+        {(props.exibeBotaoRemover) && (
+          <View style={{ marginLeft: 15 }}>
+            <BotaoRemover onPress={props.onPressBotaoRemover} />
+          </View>
+        )}
       </View>
-      {(props.exibeBotaoRemover) && (
-        <BotaoRemover
-          onPress={() => {}}
-        />
-      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,

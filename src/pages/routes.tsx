@@ -63,7 +63,7 @@ export function RoutesTabsDashboard() {
         },
         headerShown: false
       })}
-      initialRouteName={"Favoritos"}
+      initialRouteName={"EmpresasRecentes"}
     >
       <Tab.Screen name="AreaDados" component={AreaDados} />
       <Tab.Screen name="EmpresasRecentes" component={EmpresasRecentes} />

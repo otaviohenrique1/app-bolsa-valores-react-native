@@ -22,7 +22,6 @@ export function Favoritos() {
           keyExtractor={(item) => item.codigo_empresa}
           renderItem={({ item }) => {
             return <Item
-              exibeBotaoFavorito={false}
               codigo_empresa={item.codigo_empresa}
               nome_empresa={item.nome_empresa}
               porcentagem={item.porcentagem}
@@ -61,13 +60,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#dddddd',
     // alignItems: 'center',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     width: 'auto',
     paddingHorizontal: 10,
   },
   tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
