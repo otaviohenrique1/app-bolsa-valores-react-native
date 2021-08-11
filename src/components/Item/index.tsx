@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import { BotaoFavorito, BotaoRemover } from '../Botao';
 
 interface ItemProps {
   codigo_empresa: string;
@@ -7,6 +8,7 @@ interface ItemProps {
   porcentagem: number;
   favoritado?: boolean;
   exibeBotaoFavorito?: boolean;
+  exibeBotaoRemover?: boolean;
 }
 
 export function Item(props: ItemProps) {
@@ -23,6 +25,13 @@ export function Item(props: ItemProps) {
 
   return (
     <View style={styles.itemContainer}>
+      {(props.exibeBotaoFavorito) && (
+        <View>
+          <BotaoFavorito
+            onPress={() => {}}
+          />
+        </View>
+      )}
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',
@@ -51,6 +60,11 @@ export function Item(props: ItemProps) {
           {(props.porcentagem).toFixed(2)}%
         </Text>
       </View>
+      {(props.exibeBotaoRemover) && (
+        <BotaoRemover
+          onPress={() => {}}
+        />
+      )}
     </View>
   );
 }

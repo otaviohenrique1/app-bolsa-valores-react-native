@@ -8,6 +8,7 @@ interface ItemListaFavoritoProps {
   codigo_empresa: string;
   nome_empresa: string;
   porcentagem: number;
+  favorito?: boolean;
 }
 
 export function Favoritos() {
@@ -21,9 +22,12 @@ export function Favoritos() {
           keyExtractor={(item) => item.codigo_empresa}
           renderItem={({ item }) => {
             return <Item
+              exibeBotaoFavorito={false}
               codigo_empresa={item.codigo_empresa}
               nome_empresa={item.nome_empresa}
               porcentagem={item.porcentagem}
+              favoritado={item.favorito}
+              exibeBotaoRemover={true}
             />
           }}
         />
