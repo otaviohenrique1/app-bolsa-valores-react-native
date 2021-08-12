@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Item } from '../../../components/Item';
 import { TituloFavoritos } from '../../../components/Titulo';
 import { favoritos } from '../../../utils/apis/api_favoritos';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
 
 interface ItemListaFavoritoProps {
   codigo_empresa: string;
@@ -16,15 +18,18 @@ interface ItemListaFavoritoProps {
 export function Favoritos() {
   const [data, setData] = useState<ItemListaFavoritoProps[]>([]);
 
-  useEffect(() => {
-    let itensFavoritados = favoritos.filter((item) => {
-      return item.favorito === true;
-    });
+  const selector = useSelector((state: RootState) => state);
 
-    if (itensFavoritados) {
-      setData(itensFavoritados);
-    }
-  }, []);
+  useEffect(() => {
+    // let itensFavoritados = favoritos.filter((item) => {
+    //   return item.favorito === true;
+    // });
+
+    // if (itensFavoritados) {
+    //   setData(itensFavoritados);
+    // }
+    setData(selector.favorito.favoritos);
+  }, [selector.favorito.favoritos]);
   
   return (
     <View style={styles.container}>
