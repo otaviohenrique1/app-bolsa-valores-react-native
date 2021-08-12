@@ -22,19 +22,25 @@ export function EmpresasRecentes() {
     <View style={styles.container}>
       <TituloEmpresasRecentes texto='Empresas recentes' />
       <View style={styles.containerFavoritos}>
-        <FlatList<ItemListaEmpresasRecentesProps>
-          data={data}
-          keyExtractor={(item) => item.codigo_empresa}
-          renderItem={({ item }) => {
-            return <Item
-              exibeBotaoFavorito={true}
-              codigo_empresa={item.codigo_empresa}
-              nome_empresa={item.nome_empresa}
-              porcentagem={item.porcentagem}
-              favoritado={item.favorito}
-            />
-          }}
-        />
+        {(data) ? (
+          <FlatList<ItemListaEmpresasRecentesProps>
+            data={data}
+            keyExtractor={(item) => item.codigo_empresa}
+            renderItem={({ item }) => {
+              return <Item
+                exibeSeItemFoiFavorito={true}
+                codigo_empresa={item.codigo_empresa}
+                nome_empresa={item.nome_empresa}
+                porcentagem={item.porcentagem}
+                favoritado={item.favorito}
+              />
+            }}
+          />
+        ) : (
+          <View style={styles.containerListaVazia}>
+            <Text>Lista vazia</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -49,5 +55,10 @@ const styles = StyleSheet.create({
   },
   containerFavoritos: {
     flex: 1,
-  }
+  },
+  containerListaVazia: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

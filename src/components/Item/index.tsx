@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, GestureResponderEvent } from 'react-native';
 import { BotaoFavorito, BotaoRemover } from '../Botao';
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 interface ItemProps {
   codigo_empresa: string;
   nome_empresa: string;
   porcentagem: number;
   favoritado?: boolean;
-  exibeBotaoFavorito?: boolean;
+  exibeSeItemFoiFavorito?: boolean;
   exibeBotaoRemover?: boolean;
   onPressBotaoFavorito?: ((event: GestureResponderEvent) => void) ;
   onPressBotaoRemover?: ((event: GestureResponderEvent) => void) ;
@@ -27,33 +28,26 @@ export function Item(props: ItemProps) {
 
   return (
     <View style={styles.itemContainer}>
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
-        {(props.exibeBotaoFavorito) && (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {(props.exibeSeItemFoiFavorito) && (
           <View style={{ marginRight: 10 }}>
-            <BotaoFavorito
-              onPress={props.onPressBotaoFavorito}
-              favoritado={props.favoritado}
-            />
+            {(props.favoritado) ? (
+              <AntDesign name={'star'} size={30} />
+            ) : (
+              <AntDesign name={'staro'} size={30} />
+            )}
           </View>
         )}
         <Image
           source={require('../../assets/images/icone_empresa.png')}
           style={{ width: 36, height: 36, marginRight: 10 }}
         />
-        <View style={{
-          flexDirection: 'column'
-        }}>
+        <View style={{ flexDirection: 'column' }}>
           <Text style={styles.texto}>{props.codigo_empresa}</Text>
           <Text style={styles.texto}>{props.nome_empresa}</Text>
         </View>
       </View>
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image
           source={imagem_seta_grafico}
           style={{ width: 24, height: 15, marginRight: 5 }}
