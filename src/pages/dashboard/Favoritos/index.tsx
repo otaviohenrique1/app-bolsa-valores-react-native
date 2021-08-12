@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, ListRenderItem } from 'react-native';
-import AntDesign from "react-native-vector-icons/AntDesign";
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Item } from '../../../components/Item';
+import { TituloFavoritos } from '../../../components/Titulo';
 import { favoritos } from '../../../utils/apis/api_favoritos';
 
 interface ItemListaFavoritoProps {
@@ -12,13 +14,25 @@ interface ItemListaFavoritoProps {
 }
 
 export function Favoritos() {
+  const [data, setData] = useState<ItemListaFavoritoProps[]>([]);
 
+  useEffect(() => {
+    let itensFavoritados = favoritos.filter((item) => {
+      return item.favorito === true;
+    });
+
+    if (itensFavoritados) {
+      setData(itensFavoritados);
+    }
+  }, []);
+  
   return (
     <View style={styles.container}>
       <TituloFavoritos texto='Empresas favoritas' />
       <View style={styles.containerFavoritos}>
-        <FlatList<ItemListaFavoritoProps>
-          data={favoritos}
+        {(data) ? (
+          <FlatList<ItemListaFavoritoProps>
+          data={data}
           keyExtractor={(item) => item.codigo_empresa}
           renderItem={({ item }) => {
             return <Item
@@ -30,27 +44,12 @@ export function Favoritos() {
             />
           }}
         />
+        ) : (
+          <View style={styles.containerListaVazia}>
+            <Text>Lista vazia</Text>
+          </View>
+        )}
       </View>
-    </View>
-  );
-}
-
-interface TituloFavoritosProps {
-  texto: string;
-}
-
-function TituloFavoritos(props: TituloFavoritosProps) {
-  return (
-    <View style={styles.tituloContainer}>
-      <AntDesign
-        name='star'
-        size={30}
-        color='#0047BB'
-        style={styles.tituloIcone}
-      />
-      <Text style={styles.titulo}>
-        {props.texto}
-      </Text>
     </View>
   );
 }
@@ -59,25 +58,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#dddddd',
-    // alignItems: 'center',
-    // justifyContent: 'flex-start',
     width: 'auto',
     paddingHorizontal: 10,
   },
-  tituloContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  tituloIcone: {
-    marginRight: 5
-  },
-  titulo: {
-    fontSize: 30
-  },
   containerFavoritos: {
     flex: 1,
+  },
+  containerListaVazia: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
