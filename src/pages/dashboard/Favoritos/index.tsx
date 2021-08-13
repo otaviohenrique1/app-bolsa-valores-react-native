@@ -4,19 +4,14 @@ import { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Item } from '../../../components/Item';
 import { TituloFavoritos } from '../../../components/Titulo';
-import { favoritos } from '../../../utils/apis/api_favoritos';
+// import { favoritos } from '../../../utils/apis/api_favoritos';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
-
-interface ItemListaFavoritoProps {
-  codigo_empresa: string;
-  nome_empresa: string;
-  porcentagem: number;
-  favorito?: boolean;
-}
+import { DataProps } from '../../../utils/utils';
+import { SemDados } from '../../../components/SemDados';
 
 export function Favoritos() {
-  const [data, setData] = useState<ItemListaFavoritoProps[]>([]);
+  const [data, setData] = useState<DataProps[]>([]);
 
   const selector = useSelector((state: RootState) => state);
 
@@ -36,7 +31,7 @@ export function Favoritos() {
       <TituloFavoritos texto='Empresas favoritas' />
       <View style={styles.containerFavoritos}>
         {(data) ? (
-          <FlatList<ItemListaFavoritoProps>
+          <FlatList<DataProps>
           data={data}
           keyExtractor={(item) => item.codigo_empresa}
           renderItem={({ item }) => {
@@ -50,9 +45,7 @@ export function Favoritos() {
           }}
         />
         ) : (
-          <View style={styles.containerListaVazia}>
-            <Text>Lista vazia</Text>
-          </View>
+          <SemDados />
         )}
       </View>
     </View>
@@ -68,10 +61,5 @@ const styles = StyleSheet.create({
   },
   containerFavoritos: {
     flex: 1,
-  },
-  containerListaVazia: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

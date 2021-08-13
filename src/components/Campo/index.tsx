@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Image, GestureResponderEvent } from 'react-native';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 interface CampoProps {
   placeholder?: string;
@@ -21,10 +22,11 @@ export function CampoBusca(props: CampoProps) {
         style={styles_campo_busca.campo_busca_botao}
         onPress={props.onPress}
       >
-        <Image
+        {/* <Image
           source={require('../../assets/images/search.png')}
           style={styles_campo_busca.campo_busca_botao_imagem}
-        />
+        /> */}
+        <FontAwesome name='search' size={24} color='#ffffff' />
       </TouchableOpacity>
     </View>
   );
@@ -51,8 +53,8 @@ const styles_campo_busca = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  campo_busca_botao_imagem: {
-    width: 40,
-    height: 40,
-  },
+  // campo_busca_botao_imagem: {
+  //   width: 40,
+  //   height: 40,
+  // },
 });

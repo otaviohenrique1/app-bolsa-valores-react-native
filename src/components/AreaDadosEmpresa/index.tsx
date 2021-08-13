@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, GestureResponderEvent } from 'react-native';
+import { corrigeValor } from '../../utils/utils';
 import { BotaoFavorito } from '../Botao';
 
 interface AreaDadosEmpresaProps {
@@ -10,37 +11,48 @@ interface AreaDadosEmpresaProps {
     porcentagem: number;
     valor_acao: number;
     valor_variacao_dinheiro: number;
-  }
+  },
+  onPress?: ((event: GestureResponderEvent) => void);
 }
 
 export function AreaDadosEmpresa(props: AreaDadosEmpresaProps) {
+  let favoritado = props.data.favorito || false;
+  let nomeEmpresa = props.data.nome_empresa || '---';
+  let codigoEmpresa = props.data.codigo_empresa || '---';
+  let valorAcao = props.data.valor_acao || 0;
+  let valorVariacaoDinheiro = props.data.valor_variacao_dinheiro || 0;
+  let porcentagem = props.data.porcentagem || 0;
+  
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row' }}>
         <View style={[styles.botao_favorito_box, { marginRight: 10 }]}>
-          <BotaoFavorito favoritado={props.data.favorito} />
+          <BotaoFavorito
+            favoritado={favoritado}
+            onPress={props.onPress}
+          />
         </View>
         <View style={{ flexDirection: 'column' }}>
-          <Text style={styles.texto}>{props.data.nome_empresa}</Text>
-          <Text style={styles.texto}>{props.data.codigo_empresa}</Text>
+          <Text style={styles.texto}>{nomeEmpresa}</Text>
+          <Text style={styles.texto}>{codigoEmpresa}</Text>
         </View>
       </View>
       <ValorAcao
-        valor_acao={props.data.valor_acao}
-        valor_variacao_dinheiro={props.data.valor_variacao_dinheiro}
-        porcentagem={props.data.porcentagem}
+        valor_acao={valorAcao}
+        valor_variacao_dinheiro={valorVariacaoDinheiro}
+        porcentagem={porcentagem}
       />
     </View>
   );
 }
 
-interface VariacaoDinheiroPorcentagemBoxProps {
+interface ValorAcaoProps {
   valor_acao: number;
   valor_variacao_dinheiro: number;
   porcentagem: number;
 }
 
-function ValorAcao(props: VariacaoDinheiroPorcentagemBoxProps) {
+function ValorAcao(props: ValorAcaoProps) {
   let valor = Math.sign(props.porcentagem);
   const verificaSeValorForPositivo = valor === 1;
   const verificaSeValorForNegativo = valor === -1;
@@ -60,15 +72,15 @@ function ValorAcao(props: VariacaoDinheiroPorcentagemBoxProps) {
             source={imagem_seta_grafico}
             style={{ width: 24, height: 15, marginRight: 5 }}
           />
-          <Text style={styles.texto}>${props.valor_acao}</Text>
+          <Text style={styles.texto}>${corrigeValor(props.valor_acao)}</Text>
         </View>
       </View>
       <View style={{ flexDirection: 'row' }}>
         <Text style={[styles.texto, { color: cor, marginRight: 5 }]}>
-          ${props.valor_variacao_dinheiro}
+          ${corrigeValor(props.valor_variacao_dinheiro)}
         </Text>
         <Text style={[styles.texto, { color: cor }]}>
-          ({props.porcentagem}%)
+          ({corrigeValor(props.porcentagem)}%)
         </Text>
       </View>
     </View>

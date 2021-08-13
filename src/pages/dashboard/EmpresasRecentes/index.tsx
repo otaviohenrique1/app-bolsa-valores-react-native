@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
 import { Item } from '../../../components/Item';
+import { SemDados } from '../../../components/SemDados';
 import { TituloEmpresasRecentes } from '../../../components/Titulo';
-import { favoritos } from '../../../utils/apis/api_favoritos';
-
-interface ItemListaEmpresasRecentesProps {
-  codigo_empresa: string;
-  nome_empresa: string;
-  porcentagem: number;
-  favorito?: boolean;
-}
+import { DataProps } from '../../../utils/utils';
+// import { favoritos } from '../../../utils/apis/api_favoritos';
 
 export function EmpresasRecentes() {
-  const [data, setData] = useState<ItemListaEmpresasRecentesProps[]>([]);
+  const [data, setData] = useState<DataProps[]>([]);
+
+  const selector = useSelector((state: RootState) => state);
 
   useEffect(() => {
-    setData(favoritos);
-  }, []);
+    // setData(favoritos);
+    setData(selector.empresaRecente.empresas_recentes);
+  }, [selector.empresaRecente.empresas_recentes]);
 
   return (
     <View style={styles.container}>
       <TituloEmpresasRecentes texto='Empresas recentes' />
       <View style={styles.containerFavoritos}>
         {(data) ? (
-          <FlatList<ItemListaEmpresasRecentesProps>
+          <FlatList<DataProps>
             data={data}
             keyExtractor={(item) => item.codigo_empresa}
             renderItem={({ item }) => {
@@ -37,9 +37,7 @@ export function EmpresasRecentes() {
             }}
           />
         ) : (
-          <View style={styles.containerListaVazia}>
-            <Text>Lista vazia</Text>
-          </View>
+          <SemDados />
         )}
       </View>
     </View>
@@ -55,10 +53,5 @@ const styles = StyleSheet.create({
   },
   containerFavoritos: {
     flex: 1,
-  },
-  containerListaVazia: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
