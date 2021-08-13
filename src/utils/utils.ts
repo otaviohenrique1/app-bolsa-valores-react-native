@@ -33,3 +33,11 @@ export interface DataGrafico {
 export function corrigeValor(valor: number) {
   return parseFloat((valor).toFixed(2));
 }
+
+export function MensagemErroTexto(texto: string): string {
+  return texto;
+}
+
+export function MensagemErroCampoObrigatorio(texto: string): string {
+  return `O campo ${texto} é obrigatorio`;
+}

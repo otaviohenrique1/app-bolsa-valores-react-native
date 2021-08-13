@@ -24,6 +24,8 @@ export function Favoritos() {
     //   setData(itensFavoritados);
     // }
     setData(selector.favorito.favoritos);
+    console.log(selector.favorito.favoritos);
+    
   }, [selector.favorito.favoritos]);
   
   return (

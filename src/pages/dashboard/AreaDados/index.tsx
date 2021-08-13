@@ -83,24 +83,28 @@ export function AreaDados() {
   }
 
   async function handleSubmitFormFavorite() {
-    let validaSeEmpresaEstaNaLista = selector.favorito.favoritos.find((item) => {
-      return dataEmpresa.codigo_empresa === item.codigo_empresa;
-    });
-
-    let novoFavorito = {
-      favorito: favoritado,
-      nome_empresa: dataEmpresa.nome_empresa,
-      codigo_empresa: dataEmpresa.codigo_empresa,
-      porcentagem: dataEmpresa.porcentagem,
-    };
-    
-    if (validaSeEmpresaEstaNaLista) {
-      dispatch(removeFavorito(novoFavorito));
-      setFavoritado(true);
-      dispatch(setFavorito(novoFavorito));
+    if (dataEmpresa) {
+      let validaSeEmpresaEstaNaLista = selector.favorito.favoritos.find((item) => {
+        return dataEmpresa.codigo_empresa === item.codigo_empresa;
+      });
+  
+      let novoFavorito = {
+        favorito: favoritado,
+        nome_empresa: dataEmpresa.nome_empresa,
+        codigo_empresa: dataEmpresa.codigo_empresa,
+        porcentagem: dataEmpresa.porcentagem,
+      };
+      
+      if (validaSeEmpresaEstaNaLista) {
+        dispatch(removeFavorito(novoFavorito));
+        setFavoritado(true);
+        dispatch(setFavorito(novoFavorito));
+      } else {
+        setFavoritado(true);
+        dispatch(setFavorito(novoFavorito));
+      }
     } else {
-      setFavoritado(true);
-      dispatch(setFavorito(novoFavorito));
+      return;
     }
   }
 
