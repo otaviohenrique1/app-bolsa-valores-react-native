@@ -7,6 +7,7 @@ import { AreaDadosEmpresa } from '../../../components/AreaDadosEmpresa';
 import { CampoBusca } from '../../../components/Campo';
 import { Grafico } from '../../../components/Grafico';
 import { removeEmpresaRecente, setEmpresaRecente } from '../../../features/empresa_recente/empresaRecenteSlice';
+import { removeFavorito, setFavorito } from '../../../features/favorito/favoritoSlice';
 import { favoritos } from '../../../utils/apis/api_favoritos';
 import { DataEmpresa, DataEmpresaInitialData, DataGrafico, DataProps } from '../../../utils/utils';
 
@@ -32,6 +33,7 @@ export function AreaDados() {
   const [codigoEmpresaBuscada, setCodigoEmpresaBuscada] = useState<string>('');
   const [dataEmpresa, setDataEmpresa] = useState<DataEmpresa>(DataEmpresaInitialData);
   const [dataGrafico, setDataGrafico] = useState<DataGrafico[]>([]);
+  const [favoritado, setFavoritado] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state);
@@ -80,6 +82,28 @@ export function AreaDados() {
     }, 2000);
   }
 
+  async function handleSubmitFormFavorite() {
+    let validaSeEmpresaEstaNaLista = selector.favorito.favoritos.find((item) => {
+      return dataEmpresa.codigo_empresa === item.codigo_empresa;
+    });
+
+    let novoFavorito = {
+      favorito: favoritado,
+      nome_empresa: dataEmpresa.nome_empresa,
+      codigo_empresa: dataEmpresa.codigo_empresa,
+      porcentagem: dataEmpresa.porcentagem,
+    };
+    
+    if (validaSeEmpresaEstaNaLista) {
+      dispatch(removeFavorito(novoFavorito));
+      setFavoritado(true);
+      dispatch(setFavorito(novoFavorito));
+    } else {
+      setFavoritado(true);
+      dispatch(setFavorito(novoFavorito));
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.campoBuscaBox}>
@@ -92,7 +116,7 @@ export function AreaDados() {
       </View>
       <AreaDadosEmpresa
         data={dataEmpresa}
-        onPress={() => {}}
+        onPress={handleSubmitFormFavorite}
       />
       <Grafico
         data={dataGrafico}
